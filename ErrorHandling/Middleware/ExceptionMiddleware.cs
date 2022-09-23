@@ -63,7 +63,7 @@ namespace ErrorHandling.Middleware
                     break;
 
                 case UnauthorizedAccessException e:
-                    problemDetails.Status= (int)HttpStatusCode.Unauthorized;
+                    problemDetails.Status = (int)HttpStatusCode.Unauthorized;
                     break;
                 case NotImplementedException e:
                     problemDetails.Status = (int)HttpStatusCode.NotImplemented;
@@ -76,7 +76,8 @@ namespace ErrorHandling.Middleware
                     problemDetails.Status = (int)HttpStatusCode.InternalServerError;
                     break;
             }
-                        var result = JsonSerializer.Serialize(problemDetails);
+            var result = JsonSerializer.Serialize(problemDetails);
+            context.Response.StatusCode = (int)(problemDetails.Status);
             await response.WriteAsync(result);
         }
     }
